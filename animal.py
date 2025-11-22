@@ -2,7 +2,7 @@
 File: animal.py
 Description: This module defines the animal hierarchy for the Zoo Management System,
 providing a structured way to represent the different animals in the zoo. At the core
-is the abstract base class `Animal`, which defines common attributes such as name, age,
+is the abstract base class `Animal`, which defines common attributes such as name, species, age,
 dietary needs, health records, and the enclosure to which the animal is assigned.
 It also provides shared behaviors like eating, sleeping, and managing health records.
 Specific types of animals are represented as subclasses—such as `Mammal`, `Bird`, and `Reptile`—which
@@ -20,15 +20,18 @@ from abc import ABC, abstractmethod
 
 
 class Animal(ABC):
-    def __init__(self, name: str, age: int, dietary_needs: str):
+    def __init__(self, name: str, species: str, age: int, dietary_needs: str):
         if not name:
             raise ValueError("Animal name cannot be empty.")
+        if not species:
+            raise ValueError("Species cannot be empty.")
         if age < 0:
             raise ValueError("Age cannot be negative.")
         if not dietary_needs:
             raise ValueError("Dietary needs must be provided.")
 
         self._name = name
+        self._species = species
         self._age = age
         self._dietary_needs = dietary_needs
         self._health_records = []
@@ -39,10 +42,10 @@ class Animal(ABC):
         pass
 
     def eat(self):
-        return f"{self._name} is eating {self._dietary_needs}."
+        return f"{self._name} the {self._species} is eating {self._dietary_needs}."
 
     def sleep(self):
-        return f"{self._name} is sleeping."
+        return f"{self._name} the {self._species} is sleeping."
 
     def add_health_record(self, record):
         self._health_records.append(record)
@@ -58,12 +61,12 @@ class Animal(ABC):
 
 class Mammal(Animal):
     def make_sound(self):
-        return f"{self._name} makes a mammal sound."
+        return f"{self._name} the {self._species} makes a mammal sound."
 
 class Bird(Animal):
     def make_sound(self):
-        return f"{self._name} chirps."
+        return f"{self._name} the {self._species} chirps."
 
 class Reptile(Animal):
     def make_sound(self):
-        return f"{self._name} hisses."
+        return f"{self._name} the {self._species} hisses."
