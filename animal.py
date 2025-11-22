@@ -20,7 +20,7 @@ from abc import ABC, abstractmethod
 
 
 class Animal(ABC):
-    def __init__(self, name: str, species: str, age: int, dietary_needs: str):
+    def __init__(self, name: str, species: str, age: int, dietary_needs: str, environment: str):
         if not name:
             raise ValueError("Animal name cannot be empty.")
         if not species:
@@ -29,11 +29,14 @@ class Animal(ABC):
             raise ValueError("Age cannot be negative.")
         if not dietary_needs:
             raise ValueError("Dietary needs must be provided.")
+        if not environment:
+            raise ValueError("Environment type must be provided.")
 
         self._name = name
         self._species = species
         self._age = age
         self._dietary_needs = dietary_needs
+        self._environment = environment.lower()
         self._health_records = []
         self._enclosure = None
 
@@ -58,6 +61,9 @@ class Animal(ABC):
 
     def get_enclosure(self):
         return self._enclosure
+
+    def get_environment(self):
+        return self._environment
 
 class Mammal(Animal):
     def make_sound(self):
