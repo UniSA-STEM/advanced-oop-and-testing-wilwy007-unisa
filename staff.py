@@ -16,6 +16,8 @@ This is my own work as defined by the University's Academic Integrity Policy.
 '''
 
 from abc import ABC, abstractmethod
+from datetime import date
+from animal import Animal
 
 class Staff(ABC):
     def __init__(self, name: str):
@@ -30,7 +32,30 @@ class Zookeeper(Staff):
     def perform_duty(self):
         return f"{self._name} is feeding animals and cleaning enclosures."
 
+    def feed_animal(self, animal: Animal):
+        if not isinstance(animal, Animal):
+            raise TypeError("Can only feed an Animal instance.")
+        return animal.eat()
+
+    def clean_enclosure(self, enclosure):
+        enclosure.clean()
+        return f"{self._name} cleaned the enclosure '{enclosure._name}'."
+
 
 class Veterinarian(Staff):
     def perform_duty(self):
         return f"{self._name} is performing health checks."
+
+    def perform_health_check(self, animal: Animal, description: str, severity: str = "low"):
+        if not isinstance(animal, Animal):
+            raise TypeError("Health checks can only be performed on an Animal.")
+        animal.add_health_record(description, severity)
+        return f"{self._name} performed a health check on {animal._name}."
+
+    def treat_animal(self, animal: Animal, description: str = "Treatment completed"):
+        # Resolve all active health records
+        for record in animal.get_health_records():
+            if record["status"] == "active":
+                record["status"] = "resolved"
+                record["description"] += f" | {description}"
+        return f"{self._name} treated {animal._name}."
