@@ -32,7 +32,6 @@ class Enclosure:
     def add_animal(self, animal):
         if not isinstance(animal, self._allowed_animal_type):
             raise TypeError(f"This enclosure only accepts {self._allowed_animal_type.__name__}.")
-
         if animal._environment != self._environment_type:
             raise ValueError(
                 f"{animal._name} the {animal._species} requires a '{animal._environment}' "
@@ -40,6 +39,8 @@ class Enclosure:
             )
         if animal in self._animals:
             raise ValueError(f"{animal._name} the {animal._species} is already in this enclosure.")
+        if animal.get_health_status() == "Under Treatment":
+            raise ValueError(f"{animal._name} the {animal._species} is under treatment and cannot be added.")
 
         self._animals.append(animal)
         animal.assign_enclosure(self)
@@ -59,3 +60,9 @@ class Enclosure:
             "cleanliness": self._cleanliness,
             "animals": [a._name for a in self._animals]
         }
+
+    def get_health_summary(self):
+        summary = {}
+        for animal in self._animals:
+            summary[animal._name] = animal.get_health_status()
+        return summary

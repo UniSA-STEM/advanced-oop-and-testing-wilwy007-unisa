@@ -17,7 +17,7 @@ This is my own work as defined by the University's Academic Integrity Policy.
 '''
 
 from abc import ABC, abstractmethod
-
+from datetime import date
 
 class Animal(ABC):
     def __init__(self, name: str, species: str, age: int, dietary_needs: str, environment: str):
@@ -50,11 +50,28 @@ class Animal(ABC):
     def sleep(self):
         return f"{self._name} the {self._species} is sleeping."
 
-    def add_health_record(self, record):
+    def add_health_record(self, description: str, severity: str = "low", status: str = "active", record_date: date = None):
+        """Add a structured health record."""
+        if not record_date:
+            record_date = date.today()
+        record = {
+            "description": description,
+            "date": record_date,
+            "severity": severity.lower(),
+            "status": status.lower()  # active, resolved
+        }
         self._health_records.append(record)
 
     def get_health_records(self):
         return self._health_records
+
+    def is_healthy(self):
+        """Return True if there are no active health issues."""
+        return all(record.get("status") != "active" for record in self._health_records)
+
+    def get_health_status(self):
+        """Return 'Under Treatment' if any active health record exists, else 'Healthy'."""
+        return "Under Treatment" if not self.is_healthy() else "Healthy"
 
     def assign_enclosure(self, enclosure):
         self._enclosure = enclosure
