@@ -44,6 +44,10 @@ class Zookeeper(Staff):
             enc.clean()  # clean enclosure
         return f"{self._name} fed animals and cleaned assigned enclosures."
 
+    def display_assignments(self):
+        enc_names = [enc._name for enc in self._assigned_enclosures]
+        return f"Zookeeper: {self._name}, Assigned Enclosures: {', '.join(enc_names) if enc_names else 'None'}"
+
 
 class Veterinarian(Staff):
     def __init__(self, name: str):
@@ -62,3 +66,7 @@ class Veterinarian(Staff):
                 status="resolved"
             )
         return f"{self._name} performed health checks on assigned animals."
+
+    def display_assignments(self):
+        animal_names = [a._name for a in self._assigned_animals]
+        return f"Veterinarian: {self._name}, Assigned Animals: {', '.join(animal_names) if animal_names else 'None'}"

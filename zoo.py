@@ -46,3 +46,26 @@ class Zoo:
     def daily_routine(self):
         for staff in self._staff:
             staff.perform_duty()
+
+    def display_status(self):
+        status_str = "\n--- Zoo Status ---\n"
+        status_str += "Enclosures:\n"
+        for enc in self._enclosures:
+            status_str += enc.display_details() + "\n\n"
+
+        status_str += "Staff:\n"
+        for staff in self._staff:
+            if hasattr(staff, "display_assignments"):
+                status_str += staff.display_assignments() + "\n"
+
+        status_str += "--- End of Status ---\n"
+        return status_str
+
+    def list_animals_by_species(self):
+        species_dict = {}
+        for animal in self._animals:
+            species_dict.setdefault(animal._species, []).append(animal._name)
+        return species_dict
+
+    def list_animals_under_treatment(self):
+        return [a._name for a in self._animals if a.get_health_status() == "Under Treatment"]

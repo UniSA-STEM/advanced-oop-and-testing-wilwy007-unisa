@@ -74,6 +74,17 @@ class Animal(ABC):
     def get_environment(self):
         return self._environment
 
+    def display_details(self):
+        return (
+            f"Name: {self._name}\n"
+            f"Species: {self._species}\n"
+            f"Age: {self._age}\n"
+            f"Dietary Needs: {self._dietary_needs}\n"
+            f"Environment: {self._environment}\n"
+            f"Health Status: {self.get_health_status()}\n"
+            f"Enclosure: {self._enclosure._name if self._enclosure else 'None'}"
+        )
+
 
 class Mammal(Animal):
     def make_sound(self):

@@ -66,3 +66,14 @@ class Enclosure:
         for animal in self._animals:
             summary[animal._name] = animal.get_health_status()
         return summary
+
+    def display_details(self):
+        animal_names = [a._name for a in self._animals]
+        return (
+            f"Enclosure Name: {self._name}\n"
+            f"Size: {self._size}\n"
+            f"Environment: {self._environment_type}\n"
+            f"Cleanliness: {self._cleanliness}\n"
+            f"Animals: {', '.join(animal_names) if animal_names else 'None'}"
+            )
+
