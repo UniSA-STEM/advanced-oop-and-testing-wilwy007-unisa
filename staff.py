@@ -16,8 +16,8 @@ This is my own work as defined by the University's Academic Integrity Policy.
 '''
 
 from abc import ABC, abstractmethod
-from datetime import date
 from animal import Animal
+from enclosure import Enclosure
 
 class Staff(ABC):
     def __init__(self, name: str):
@@ -29,33 +29,36 @@ class Staff(ABC):
 
 
 class Zookeeper(Staff):
+    def __init__(self, name: str):
+        super().__init__(name)
+        self._assigned_enclosures = []
+
+    def assign_enclosure(self, enclosure: Enclosure):
+        if enclosure not in self._assigned_enclosures:
+            self._assigned_enclosures.append(enclosure)
+
     def perform_duty(self):
-        return f"{self._name} is feeding animals and cleaning enclosures."
-
-    def feed_animal(self, animal: Animal):
-        if not isinstance(animal, Animal):
-            raise TypeError("Can only feed an Animal instance.")
-        return animal.eat()
-
-    def clean_enclosure(self, enclosure):
-        enclosure.clean()
-        return f"{self._name} cleaned the enclosure '{enclosure._name}'."
+        for enc in self._assigned_enclosures:
+            for animal in enc._animals:
+                animal.eat()  # feed each animal
+            enc.clean()  # clean enclosure
+        return f"{self._name} fed animals and cleaned assigned enclosures."
 
 
 class Veterinarian(Staff):
+    def __init__(self, name: str):
+        super().__init__(name)
+        self._assigned_animals = []
+
+    def assign_animal(self, animal: Animal):
+        if animal not in self._assigned_animals:
+            self._assigned_animals.append(animal)
+
     def perform_duty(self):
-        return f"{self._name} is performing health checks."
-
-    def perform_health_check(self, animal: Animal, description: str, severity: str = "low"):
-        if not isinstance(animal, Animal):
-            raise TypeError("Health checks can only be performed on an Animal.")
-        animal.add_health_record(description, severity)
-        return f"{self._name} performed a health check on {animal._name}."
-
-    def treat_animal(self, animal: Animal, description: str = "Treatment completed"):
-        # Resolve all active health records
-        for record in animal.get_health_records():
-            if record["status"] == "active":
-                record["status"] = "resolved"
-                record["description"] += f" | {description}"
-        return f"{self._name} treated {animal._name}."
+        for animal in self._assigned_animals:
+            animal.add_health_record(
+                "Routine health check",
+                severity="low",
+                status="resolved"
+            )
+        return f"{self._name} performed health checks on assigned animals."
