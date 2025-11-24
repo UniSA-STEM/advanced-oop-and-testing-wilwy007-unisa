@@ -6,9 +6,7 @@ base class `Staff`, which represents a generic staff member and enforces that al
 implement a `perform_duty` method. Two concrete subclasses, `Zookeeper` and `Veterinarian`,
 inherit from `Staff` and implement role-specific responsibilities. Zookeepers are responsible
 for feeding animals and maintaining clean enclosures, while veterinarians focus on conducting health
-checks and managing animal welfare. By using abstraction, inheritance, and polymorphism, this module
-allows the system to manage different types of staff in a flexible way, supporting both
-current zoo operations and potential future staff roles.
+checks and managing animal welfare.
 Author: William Willoughby
 ID: 110477792
 Username: wilwy007

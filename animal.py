@@ -1,3 +1,14 @@
+'''
+File: animal.py
+Description: Defines the Animal base class and specific subclasses (Mammal, Bird, Reptile)
+for the Zoo Management System. Implements core attributes and behaviors
+(name, species, age, diet, environment) and supports health record management.
+Author: William Willoughby
+ID: 110477792
+Username: wilwy007
+This is my own work as defined by the University's Academic Integrity Policy.
+'''
+
 from abc import ABC, abstractmethod
 from datetime import date
 
@@ -33,7 +44,6 @@ class Animal(ABC):
         return f"{self._name} the {self._species} is sleeping."
 
     def add_health_record(self, description: str, severity: str = "low", status: str = "active", record_date: date = None):
-        """Add a structured health record."""
         if not record_date:
             record_date = date.today()
         record = {
@@ -48,18 +58,14 @@ class Animal(ABC):
         return self._health_records
 
     def clear_health_records(self):
-        """Remove all health records."""
         self._health_records = []
 
     def is_healthy(self):
-        """Return True if there are no active health issues."""
         return all(record.get("status") != "active" for record in self._health_records)
 
     def get_health_status(self):
-        """Return overall health status based on health records."""
         if not self._health_records:
             return "Healthy"
-        # Check for active treatment
         for record in self._health_records:
             if record.get("status") == "active" or "under treatment" in record["description"].lower():
                 return "Under Treatment"

@@ -2,7 +2,7 @@ import pytest
 from animal import Mammal, Bird, Reptile
 from enclosure import Enclosure
 
-# ---------- ENCLOSURE CREATION TEST ----------
+# ENCLOSURE CREATION TEST
 def test_enclosure_creation_display():
     mammal_enc = Enclosure("Savannah", 500, "savannah", Mammal)
     bird_enc = Enclosure("Aviary", 200, "arctic", Bird)
@@ -16,7 +16,7 @@ def test_enclosure_creation_display():
     assert bird_enc._size > 0
     assert reptile_enc._size > 0
 
-# ---------- ADDING VALID ANIMALS ----------
+# ADDING VALID ANIMALS
 def test_add_animal_display():
     mammal_enc = Enclosure("Savannah", 500, "savannah", Mammal)
     lion = Mammal("Leo", "Lion", 5, "meat", "savannah")
@@ -25,7 +25,7 @@ def test_add_animal_display():
     print(f"\nMammal enclosure animals: {[a._name for a in mammal_enc._animals]}")
     assert lion.get_enclosure() == mammal_enc
 
-# ---------- PREVENT ANIMAL UNDER TREATMENT ----------
+# -PREVENT ANIMAL UNDER TREATMENT
 def test_add_animal_under_treatment():
     mammal_enc = Enclosure("Savannah", 500, "savannah", Mammal)
     sick_lion = Mammal("Simba", "Lion", 3, "meat", "savannah")
@@ -37,7 +37,7 @@ def test_add_animal_under_treatment():
     print("\nCaught error adding animal under treatment:", e.value)
     assert "Simba the Lion is under treatment and cannot be added." in str(e.value)
 
-# ---------- HEALTH SUMMARY TEST ----------
+# HEALTH SUMMARY TEST
 def test_health_summary():
     mammal_enc = Enclosure("Savannah", 500, "savannah", Mammal)
     healthy_lion = Mammal("Leo", "Lion", 5, "meat", "savannah")
@@ -45,7 +45,6 @@ def test_health_summary():
     sick_lion.add_health_record("Under Treatment – leg injury")
 
     mammal_enc.add_animal(healthy_lion)
-    # Sick lion cannot be added
     with pytest.raises(ValueError):
         mammal_enc.add_animal(sick_lion)
 
@@ -53,7 +52,7 @@ def test_health_summary():
     print("\nHealth summary:", summary)
     assert summary == {"Leo": "Healthy"}
 
-# ---------- HEALTH SUMMARY MULTIPLE ANIMALS ----------
+# HEALTH SUMMARY MULTIPLE ANIMALS
 def test_health_summary_multiple_animals():
     mammal_enc = Enclosure("Savannah", 500, "savannah", Mammal)
     healthy_lion = Mammal("Leo", "Lion", 5, "meat", "savannah")
@@ -70,7 +69,7 @@ def test_health_summary_multiple_animals():
     print("\nHealth summary with multiple animals:", summary)
     assert summary == {"Leo": "Healthy", "Ella": "Healthy"}
 
-# ---------- INVALID ANIMAL TYPE TEST ----------
+# INVALID ANIMAL TYPE TEST
 def test_add_invalid_animal_type():
     mammal_enc = Enclosure("Savannah", 500, "savannah", Mammal)
     percy = Bird("Percy", "Penguin", 2, "fish", "arctic")
@@ -81,7 +80,7 @@ def test_add_invalid_animal_type():
     print("\nCaught error adding invalid animal type:", e.value)
     assert "only accepts Mammal" in str(e.value)
 
-# ---------- ENVIRONMENT MISMATCH TEST ----------
+# ENVIRONMENT MISMATCH TEST
 def test_add_invalid_environment():
     bird_enc = Enclosure("Aviary", 200, "arctic", Bird)
     wrong_env_bird = Bird("Sunny", "Parrot", 3, "seeds", "tropical")
@@ -92,7 +91,7 @@ def test_add_invalid_environment():
     print("\nCaught environment mismatch error:", e.value)
     assert "requires a 'tropical' environment" in str(e.value)
 
-# ---------- DUPLICATE ANIMAL TEST ----------
+# DUPLICATE ANIMAL TEST
 def test_prevent_duplicate_animal():
     mammal_enc = Enclosure("Savannah", 500,"savannah", Mammal)
     lion = Mammal("Leo", "Lion", 5, "meat", "savannah")
@@ -104,7 +103,7 @@ def test_prevent_duplicate_animal():
     print("\nCaught duplicate animal error:", e.value)
     assert "already in this enclosure" in str(e.value)
 
-# ---------- REMOVE ANIMAL TEST ----------
+# REMOVE ANIMAL TEST
 def test_remove_animal_display():
     reptile_enc = Enclosure("Reptile House", 150, "desert", Reptile)
     snake = Reptile("Sly", "Snake", 4, "rodents", "desert")
@@ -116,7 +115,7 @@ def test_remove_animal_display():
     assert snake not in reptile_enc._animals
     assert snake.get_enclosure() is None
 
-# ---------- CLEAN ENCLOSURE TEST ----------
+# CLEAN ENCLOSURE TEST
 def test_clean_enclosure_display():
     mammal_enc = Enclosure("Savannah", 500, "savannah", Mammal)
     mammal_enc._cleanliness = 30
@@ -127,7 +126,7 @@ def test_clean_enclosure_display():
 
     assert mammal_enc._cleanliness == 100
 
-# ---------- STATUS TEST ----------
+# STATUS TEST
 def test_get_status_display():
     bird_enc = Enclosure("Aviary", 200, "arctic", Bird)
     percy = Bird("Percy", "Penguin", 2, "fish", "arctic")
@@ -141,7 +140,7 @@ def test_get_status_display():
     assert status["environment"] == "arctic"
     assert status["cleanliness"] == 100
 
-# ---------- STATUS MULTIPLE ANIMALS ----------
+# STATUS MULTIPLE ANIMALS
 def test_get_status_display_multiple_animals():
     bird_enc = Enclosure("Aviary", 200, "arctic", Bird)
     percy = Bird("Percy", "Penguin", 2, "fish", "arctic")
@@ -157,7 +156,7 @@ def test_get_status_display_multiple_animals():
     assert status["cleanliness"] == 100
     assert status["animals"] == ["Percy", "Sunny"]
 
-# ---------- EMPTY ENCLOSURE STATUS ----------
+# EMPTY ENCLOSURE STATUS
 def test_get_status_empty_enclosure_display():
     reptile_enc = Enclosure("Reptile House", 150, "desert", Reptile)
     status = reptile_enc.get_status()
@@ -166,7 +165,7 @@ def test_get_status_empty_enclosure_display():
     assert status["animals"] == []
     assert status["cleanliness"] == 100
 
-# ---------- INVALID SIZE TEST ----------
+# INVALID SIZE TEST
 def test_invalid_enclosure_size():
     with pytest.raises(ValueError) as e:
         Enclosure("Tiny", 0, "desert", Mammal)

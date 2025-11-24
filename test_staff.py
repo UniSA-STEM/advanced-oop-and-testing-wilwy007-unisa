@@ -4,10 +4,8 @@ from animal import Mammal
 from enclosure import Enclosure
 from zoo import Zoo
 
-
-# -----------------------------
 # ZOOKEEPER TESTS
-# -----------------------------
+
 def test_zookeeper_feeds_and_cleans():
     zoo = Zoo()
     enc = Enclosure("Savannah", 100, "savannah", Mammal)
@@ -38,10 +36,8 @@ def test_zookeeper_no_duplicate_enclosure():
     print(f"Assigned enclosures (no duplicates): {keeper._assigned_enclosures}")
     assert keeper._assigned_enclosures.count(enc) == 1
 
-
-# -----------------------------
 # VETERINARIAN TESTS
-# -----------------------------
+
 def test_veterinarian_health_checks():
     lion = Mammal("Leo", "Lion", 5, "meat", "savannah")
     vet = Veterinarian("Dr. Alice")
@@ -55,7 +51,6 @@ def test_veterinarian_health_checks():
     assert lion.get_health_status() == "Healthy"
     assert result == "Dr. Alice performed health checks on assigned animals."
 
-
 def test_veterinarian_no_duplicate_animal():
     lion = Mammal("Leo", "Lion", 5, "meat", "savannah")
     vet = Veterinarian("Dr. Alice")
@@ -64,19 +59,15 @@ def test_veterinarian_no_duplicate_animal():
     print(f"Assigned animals (no duplicates): {vet._assigned_animals}")
     assert vet._assigned_animals.count(lion) == 1
 
-
-# -----------------------------
 # ABSTRACT STAFF TEST
-# -----------------------------
+
 def test_cannot_instantiate_staff():
     with pytest.raises(TypeError) as e:
         Staff("Abstract")
     print(f"Attempted abstract Staff instantiation: {e.value}")
 
-
-# -----------------------------
 # ZOO DAILY ROUTINE TESTS
-# -----------------------------
+
 def test_zoo_daily_routine_updates():
     zoo = Zoo()
     enc = Enclosure("Savannah", 100, "savannah", Mammal)
@@ -99,10 +90,8 @@ def test_zoo_daily_routine_updates():
     assert enc._cleanliness == 100
     assert lion.get_health_status() == "Healthy"
 
-
-# -----------------------------
 # ZOO ASSIGNMENT ERRORS
-# -----------------------------
+
 def test_assign_invalid_staff_type():
     zoo = Zoo()
     enc = Enclosure("Savannah", 100, "savannah", Mammal)

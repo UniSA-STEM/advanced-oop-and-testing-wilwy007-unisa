@@ -5,10 +5,7 @@ the physical spaces where animals are housed. Each enclosure has the properties 
 size, environmental type, cleanliness level, and a restriction on the type of animal it can
 contain. The class allows adding and removing animals while enforcing type
 compatibility, cleaning the enclosure, and reporting its current status including the animals
-it contains. The module ensures that enclosures are managed consistently, supports animal welfare,
-and allows the system to maintain a clear overview of the zoo’s layout and operational conditions.
-This design also supports future extensions, such as scheduling cleaning or feeding routines and
-monitoring environmental factors.
+it contains. T
 Author: William Willoughby
 ID: 110477792
 Username: wilwy007
