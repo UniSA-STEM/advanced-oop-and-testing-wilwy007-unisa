@@ -24,11 +24,17 @@ class Zoo:
             self._animals.remove(animal)
 
     def assign_staff_to_enclosure(self, staff_member, enclosure):
-        if isinstance(staff_member, Zookeeper):
+        from staff import Zookeeper  # ensure imported
+        if not isinstance(staff_member, Zookeeper):
+            raise TypeError(f"Only Zookeeper objects can be assigned to enclosures, got {type(staff_member)}")
+        if enclosure not in staff_member._assigned_enclosures:
             staff_member.assign_enclosure(enclosure)
 
     def assign_staff_to_animal(self, staff_member, animal):
-        if isinstance(staff_member, Veterinarian):
+        from staff import Veterinarian
+        if not isinstance(staff_member, Veterinarian):
+            raise TypeError(f"Only Veterinarian objects can be assigned to animals, got {type(staff_member)}")
+        if animal not in staff_member._assigned_animals:
             staff_member.assign_animal(animal)
 
     def generate_health_report(self):
